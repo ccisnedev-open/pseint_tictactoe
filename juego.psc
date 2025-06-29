@@ -172,19 +172,21 @@ Funcion IMPRIMIR_TABLERO(tablero)
     Definir i, j Como Entero
     Escribir ""
     Escribir "      a   b   c"
+    Escribir ""
     Para i <- 3 Hasta 1 Con Paso -1 Hacer
-        Escribir Sin Saltar " ", i, "   "
-        Para j <- 1 Hasta 3 Hacer
-            Escribir Sin Saltar " ", tablero[i,j], " "
-            Si j <> 3 Entonces
-                Escribir Sin Saltar "│"
-            FinSi
-        FinPara
-        Escribir "   ", i
-        Si i <> 1 Entonces
-            Escribir "     ───┼───┼───"
-        FinSi
+    Escribir Sin Saltar " ", i, "   "
+    Para j <- 1 Hasta 3 Hacer
+    Escribir Sin Saltar " ", tablero[i,j], " "
+    Si j <> 3 Entonces
+    Escribir Sin Saltar "│"
+    FinSi
     FinPara
+    Escribir "   ", i
+    Si i <> 1 Entonces
+    Escribir "     ───┼───┼───"
+    FinSi
+    FinPara
+    Escribir ""
     Escribir "      a   b   c"
     Escribir ""
 FinFuncion
