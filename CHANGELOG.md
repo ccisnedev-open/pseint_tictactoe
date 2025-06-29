@@ -1,5 +1,10 @@
 # Changelog
 
+## [0.0.2] - 2025-06-29
+
+### Mejorado
+- Mejora la presentación del juego y optimiza el flujo de impresión del tablero.
+
 ## [0.0.1] - 2025-06-29
 
 ### Added

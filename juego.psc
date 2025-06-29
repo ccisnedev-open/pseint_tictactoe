@@ -1,5 +1,5 @@
 //##############################################################
-//  TRES EN RAYA – v0.0.1                                     //
+//  TRES EN RAYA – v0.0.2                                     //
 //  Autor: @ccisnedev                                         //
 //##############################################################
 
@@ -32,9 +32,8 @@ Proceso TresEnRaya
     juegoTerminado <- Falso
 	
     // 5. BUCLE PRINCIPAL
+    IMPRIMIR_TABLERO(tablero)
     Repetir
-        LIMPIAR_PANTALLA
-        IMPRIMIR_TABLERO(tablero)
         
         Si turno = 1 Entonces
             tipoTurno <- "humano"
@@ -54,6 +53,8 @@ Proceso TresEnRaya
 		
 		// Colocar ficha
 		tablero[fila,col] <- fichaTurno
+        IMPRIMIR_TABLERO(tablero)
+        
 		ACTUALIZAR_CONTADORES(turno, fila, col, filasHum, columnasHum, diagHum, filasBot, columnasBot, diagBot)
 		
 		jugadas <- jugadas + 1
@@ -62,6 +63,7 @@ Proceso TresEnRaya
 		VERIFICAR_GANADOR(turno, filasHum, columnasHum, diagHum, filasBot, columnasBot, diagBot, hayGanador, tipoLinea, indLinea)
 		Si hayGanador Entonces
 			ganador <- fichaTurno
+            Esperar 1 Segundos
 			DIBUJAR_LINEA_GANADORA(tablero, tipoLinea, indLinea)
 			juegoTerminado <- Verdadero
 		FinSi
@@ -89,7 +91,6 @@ Proceso TresEnRaya
 	Hasta Que juegoTerminado
 	
 	// 6. PANTALLA FINAL
-	LIMPIAR_PANTALLA
 	IMPRIMIR_TABLERO(tablero)
 	
 	Si ganador = "X" Entonces
@@ -111,6 +112,9 @@ Proceso TresEnRaya
             Escribir "Empate. ¡Bien jugado!"
         FinSi
     FinSi
+
+    // Creditos
+    Escribir "@ccisnedev"
 							
 FinProceso
 
@@ -128,11 +132,12 @@ Funcion nivel <- PRESENTACION
 	Definir opcionValida Como Logico
     Repetir
         LIMPIAR_PANTALLA
-        Escribir "Tres en Raya - v0.0.1"
-        Escribir "@ccisnedev"
+        Escribir "╔══════════════════════╗"
+        Escribir "║ Tres en Raya v0.0.2  ║"
+        Escribir "╠══════════════════════╣"
+        Escribir "║ 1.Fácil   2.Difícil  ║"
+        Escribir "╚══════════════════════╝"
         Escribir ""
-        Escribir "Seleccione nivel:"
-        Escribir "[1] Fácil   [2] Difícil"
         Escribir "Opción: " Sin Saltar
         Leer opcion
 		
@@ -169,6 +174,8 @@ Funcion INICIALIZAR_JUEGO(tablero Por Referencia, filasHum Por Referencia, colum
 FinFuncion
 
 Funcion IMPRIMIR_TABLERO(tablero)
+    LIMPIAR_PANTALLA
+
     Definir i, j Como Entero
     Escribir ""
     Escribir "      a   b   c"
@@ -297,7 +304,7 @@ Funcion encontrado <- BOT_GANAR(tablero, filasBot, columnasBot, diagBot, fila Po
         FinMientras
     FinSi
 	
-	// Diagonal ↘
+	// Diagonal /
 	Si No encontrado Y diagBot[1] = 2 Entonces
 		i <- 1
 		Mientras i <= 3 Y No encontrado Hacer
@@ -310,7 +317,7 @@ Funcion encontrado <- BOT_GANAR(tablero, filasBot, columnasBot, diagBot, fila Po
 		FinMientras
 	FinSi
 	
-	// Diagonal ↙
+	// Diagonal \
 	Si No encontrado Y diagBot[2] = 2 Entonces
 		i <- 1
 		Mientras i <= 3 Y No encontrado Hacer
@@ -364,7 +371,7 @@ Funcion encontrado <- BOT_BLOQUEAR(tablero, filasHum, columnasHum, diagHum, fila
         FinMientras
     FinSi
 	
-	// Diagonal ↘
+	// Diagonal /
 	Si No encontrado Y diagHum[1] = 2 Entonces
 		i <- 1
 		Mientras i <= 3 Y No encontrado Hacer
@@ -377,7 +384,7 @@ Funcion encontrado <- BOT_BLOQUEAR(tablero, filasHum, columnasHum, diagHum, fila
 		FinMientras
 	FinSi
 	
-	// Diagonal ↙
+	// Diagonal \
 	Si No encontrado Y diagHum[2] = 2 Entonces
 		i <- 1
 		Mientras i <= 3 Y No encontrado Hacer
@@ -516,11 +523,11 @@ Funcion DIBUJAR_LINEA_GANADORA(tablero Por Referencia, tipoLinea, indLinea)
             Para i <- 1 Hasta 3 Hacer 
 				tablero[i,indLinea] <- '│' 
 			FinPara
-        3: // diagonal ↘
+        3: // diagonal /
             Para i <- 1 Hasta 3 Hacer 
 				tablero[i,i] <- '/'
 			FinPara
-        4: // diagonal ↙
+        4: // diagonal \
             Para i <- 1 Hasta 3 Hacer 
 				tablero[i,4-i] <- '\' 
 			FinPara
