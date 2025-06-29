@@ -1,3 +1,10 @@
+## [0.1.0] - 2025-06-29
+
+### Mejorado
+- Bot mejorado: ahora usa lógica de esquinas ganadoras y tácticas para crear forks.
+- Se agregan funciones `BOT_ESQUINA_GANADORA` y `BOT_ESQUINA_TACTICA`.
+- El bot es mucho más difícil de vencer en modo difícil.
+
 # Changelog
 
 ## [0.0.2] - 2025-06-29
