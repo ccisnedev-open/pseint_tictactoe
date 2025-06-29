@@ -2,78 +2,70 @@
   <h1>Tres en Raya en PSeInt</h1>
 </div>
 
-## Descripción General
+## 🎯 Descripción General
 
-Este repositorio contiene una implementación del clásico juego "Tres en Raya" (Tic-Tac-Toe) desarrollada en PSeInt. El proyecto está diseñado con fines educativos, demostrando el uso de estructuras de control, arreglos y funciones para crear un juego simple pero funcional. Permite a un jugador humano competir contra un bot con dos niveles de dificultad.
+Este repositorio contiene una implementación completa del clásico juego "Tres en Raya" (Tic-Tac-Toe) desarrollada en **PSeInt**. El proyecto está orientado al aprendizaje de la programación estructurada mediante pseudocódigo y se enfoca en el uso de arreglos, condicionales, ciclos y subprocesos.
 
-## Stack Tecnológico
+Permite jugar contra un **bot con dos niveles de dificultad** e incluye una interfaz de texto clara y modular.
 
-- **Lenguaje**: PSeInt
+## 🛠 Stack Tecnológico
 
-## Setup
+- **Lenguaje:** PSeInt (Pseudocódigo estructurado)
+- **Entorno:** Intérprete de PSeInt (recomendado: versión 2023 o superior)
 
-1.  Descarga e instala el intérprete de PSeInt desde su [sitio web oficial](http://pseint.sourceforge.net/).
-2.  Clona este repositorio en tu máquina local:
+## 🚀 Cómo empezar
+
+1. Descarga e instala el intérprete de PSeInt desde su [sitio web oficial](http://pseint.sourceforge.net/).
+2. Clona este repositorio en tu máquina local:
+
     ```bash
-    git clone <URL-DEL-REPOSITORIO>
+    git clone https://github.com/ccisnedev-open/pseint_tictactoe.git
     ```
-3.  Abre el archivo `juego.psc` con PSeInt.
-4.  Ejecuta el programa para comenzar a jugar.
 
-## Características
+3. Abre el archivo `tres_en_raya.psc` en PSeInt.
+4. Ejecuta el algoritmo principal `TresEnRaya`.
 
-- **Juego Clásico**: Implementación completa de las reglas del Tres en Raya.
-- **Jugador vs. Bot**: Compite contra una inteligencia artificial simple.
-- **Niveles de Dificultad**:
-  - **Fácil**: El bot elige sus movimientos de forma aleatoria.
-  - **Difícil**: El bot aplica una estrategia básica para intentar ganar o bloquear al jugador.
-- **Interfaz de Texto**: Interacción a través de la consola con un tablero visualmente claro.
-- **Código Modular**: El programa está estructurado en funciones para facilitar su lectura y mantenimiento.
+## 🎮 Características del Juego
 
-## Filosofía
+- ✅ **Reglas completas** del clásico Tres en Raya.
+- 🧠 **Modo un jugador**: compite contra una IA simple.
+- 🔁 **Dos niveles de dificultad**:
+  - **Fácil**: el bot elige casillas al azar.
+  - **Difícil**: el bot analiza jugadas para **bloquear** y **ganar**.
+- 🖥 **Interfaz visual en texto** tipo consola.
+- 🧩 **Arquitectura modular**: subprocesos bien separados para facilitar la lectura, depuración y pruebas.
+- ♻️ **Detección de victoria, empate y reinicio limpio.**
 
-El código busca ser lo más explícito y didáctico posible. Se prioriza la claridad sobre la optimización, con el objetivo de que sirva como material de aprendizaje para quienes se inician en el mundo de la programación y los algoritmos.
+## 👨‍🏫 Filosofía del Código
 
-## Ejemplo Representativo
+Este proyecto fue diseñado con un enfoque **educativo**. Se prioriza la **claridad** por encima de la optimización. Las estructuras del algoritmo están pensadas para que cualquier persona que esté aprendiendo PSeInt pueda comprender y extender el código fácilmente.
 
-La lógica para leer la jugada del usuario valida que la coordenada sea correcta y que la casilla esté libre.
+Además, se practica una convención clara en nombres, espaciado y segmentación del flujo.
 
-```pseudocode
-Funcion LEER_JUGADA_HUMANO(tablero, fila Por Referencia, col Por Referencia)
-    Definir ok, libre Como Logico
-    Definir coord, letra, num Como Cadena
-    Repetir
-        Escribir "Ingresa coordenada (a1..c3): " Sin Saltar
-        Leer coord
-        ok <- Falso
-		
-        Si Longitud(coord) = 2 Entonces
-            // ... validación de formato ...
-            Si fila >= 1 Y fila <= 3 Y col >= 1 Y col <= 3 Entonces
-                ok <- Verdadero
-            FinSi
-        FinSi
-		
-        Si No ok Entonces
-            Escribir "Formato inválido. Usa a1..c3."
-		SiNo
-			libre <- (tablero[fila,col] = " ")
-			Si No libre Entonces
-				Escribir "Casilla ocupada. Elige otra."
-			FinSi
-		FinSi
-	Hasta Que ok Y libre
-FinFuncion
-```
 
-## Changelog
+## 📒 Simulación de Pantalla
 
-Las actualizaciones y cambios en el proyecto se documentan en el archivo `CHANGELOG.md`.
+El repositorio también incluye un archivo de práctica llamado `SimulacionPantalla.psc` donde se demuestra cómo **simular una interfaz gráfica simple** en texto mediante matrices. Es ideal para explorar cómo funciona el redibujado de pantalla y cómo representar visualmente un tablero en consola.
 
-## Contribuciones
+## 📋 Changelog
 
-Este es un proyecto de código abierto. Las contribuciones son bienvenidas. Si deseas mejorar el juego, siéntete libre de hacer un _fork_ y enviar una _Pull Request_.
+Las actualizaciones y cambios importantes están documentados en el archivo [`CHANGELOG.md`](./CHANGELOG.md).
 
-## Licencia
+## 🤝 Contribuciones
 
-MIT
+Este es un proyecto de código abierto mantenido por la comunidad.
+
+- ¿Encontraste un bug? Ábrelo en la pestaña de *Issues*.
+- ¿Tienes mejoras o nuevas ideas? Haz un *fork* y envía tu *Pull Request*.
+
+Toda contribución educativa es bienvenida 💡
+
+## 🪪 Licencia
+
+MIT — [Ver licencia completa](LICENSE)
+
+---
+
+<div align="center">
+  Hecho con 💙 por @ccisnedev
+</div>
