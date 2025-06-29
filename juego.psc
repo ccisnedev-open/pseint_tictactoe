@@ -47,7 +47,7 @@ Proceso TresEnRaya
 		Si turno = 1 Entonces
 			LEER_JUGADA_HUMANO(tablero, fila, col)
 		SiNo
-			PAUSA_2_SEG
+			PAUSA_BOT
 			turnoBotNum <- turnoBotNum + 1
 			ELEGIR_JUGADA_BOT(tablero, nivel, turnoBotNum, filasHum, columnasHum, diagHum, filasBot, columnasBot, diagBot, fila, col)
 		FinSi
@@ -124,15 +124,23 @@ Funcion LIMPIAR_PANTALLA
 FinFuncion
 
 Funcion nivel <- PRESENTACION
+	Definir opcion Como Cadena
+	Definir opcionValida Como Logico
     Repetir
         LIMPIAR_PANTALLA
+        Escribir "Tres en Raya - v0.0.1"
         Escribir "@ccisnedev"
         Escribir ""
         Escribir "Seleccione nivel:"
         Escribir "[1] Fácil   [2] Difícil"
         Escribir "Opción: " Sin Saltar
-        Leer nivel
-    Hasta Que nivel = 1 O nivel = 2
+        Leer opcion
+		
+		opcionValida <- (opcion = "1" O opcion = "2")
+		
+    Hasta Que opcionValida
+	
+	nivel <- ConvertirANumero(opcion)
 FinFuncion
 
 Funcion INICIALIZAR_JUEGO(tablero Por Referencia, filasHum Por Referencia, columnasHum Por Referencia, diagHum Por Referencia, filasBot Por Referencia, columnasBot Por Referencia, diagBot Por Referencia, jugadas Por Referencia)
@@ -500,23 +508,23 @@ Funcion DIBUJAR_LINEA_GANADORA(tablero Por Referencia, tipoLinea, indLinea)
     Segun tipoLinea Hacer
         1: // fila
             Para i <- 1 Hasta 3 Hacer 
-				tablero[indLinea,i] <- "─" 
+				tablero[indLinea,i] <- '─'
 			FinPara
         2: // columna
             Para i <- 1 Hasta 3 Hacer 
-				tablero[i,indLinea] <- "│" 
+				tablero[i,indLinea] <- '│' 
 			FinPara
         3: // diagonal ↘
             Para i <- 1 Hasta 3 Hacer 
-				tablero[i,i] <- "\ " 
+				tablero[i,i] <- '/'
 			FinPara
         4: // diagonal ↙
             Para i <- 1 Hasta 3 Hacer 
-				tablero[i,4-i] <- "/" 
+				tablero[i,4-i] <- '\' 
 			FinPara
     FinSegun
 FinFuncion
 
-Funcion PAUSA_2_SEG
-    Esperar 2 Segundos
+Funcion PAUSA_BOT
+    Esperar 1 Segundos
 FinFuncion
