@@ -498,36 +498,36 @@ Funcion tactica <- BOT_ESQUINA_TACTICA(tablero,   fila Por Referencia, col Por R
     FinMientras
 FinFuncion
 
-Funcion ELEGIR_JUGADA_BOT(tablero, nivel, turnoBotNum,             filasHum, columnasHum, diagHum,   filasBot, columnasBot, diagBot,     fila Por Referencia, col Por Referencia)
-    Definir ok Como Logico
+Funcion ELEGIR_JUGADA_BOT(tablero, nivel, turnoBotNum, filasHum, columnasHum, diagHum, filasBot, columnasBot, diagBot, fila Por Referencia, col Por Referencia)
+    Definir encontrado Como Logico
     
     Si nivel = 1 Entonces                              // ——— MODO FÁCIL
         BOT_ALEATORIO(tablero, fila, col)
     SiNo                                               // ——— MODO DIFÍCIL
         // 1) Ganar de inmediato
-        ok <- BOT_GANAR(tablero, filasBot, columnasBot, diagBot, fila, col)
+        encontrado <- BOT_GANAR(tablero, filasBot, columnasBot, diagBot, fila, col)
         
         // 2) Bloquear derrota inminente
-        Si No ok Entonces
-            ok <- BOT_BLOQUEAR(tablero, filasHum, columnasHum, diagHum, fila, col)
+        Si No encontrado Entonces
+            encontrado <- BOT_BLOQUEAR(tablero, filasHum, columnasHum, diagHum, fila, col)
         FinSi
         
         // 3) Jugada 1: elegir esquina inicial
-        Si No ok Entonces
+        Si No encontrado Entonces
             Si turnoBotNum = 1 Entonces
                 BOT_PRIMERA_ESQUINA(tablero, fila, col)
-                ok <- Verdadero
+                encontrado <- Verdadero
             FinSi
         FinSi
         
         // 4) Esquina que cierra dos líneas YA
-        Si No ok Entonces
-            ok <- BOT_ESQUINA_GANADORA(tablero, filasBot, columnasBot, diagBot, fila, col)
+        Si No encontrado Entonces
+            encontrado <- BOT_ESQUINA_GANADORA(tablero, filasBot, columnasBot, diagBot, fila, col)
         FinSi
         
         // 5) Esquina que prepara el fork
-        Si No ok Entonces
-            ok <- BOT_ESQUINA_TACTICA(tablero, fila, col)
+        Si No encontrado Entonces
+            encontrado <- BOT_ESQUINA_TACTICA(tablero, fila, col)
         FinSi
     FinSi
 FinFuncion
