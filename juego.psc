@@ -133,7 +133,7 @@ Funcion nivel <- PRESENTACION
     Repetir
         LIMPIAR_PANTALLA
         Escribir "╔══════════════════════╗"
-        Escribir "║ Tres en Raya v0.0.2  ║"
+        Escribir "║ Tres en Raya v0.1.0  ║"
         Escribir "╠══════════════════════╣"
         Escribir "║ 1.Fácil   2.Difícil  ║"
         Escribir "╚══════════════════════╝"
