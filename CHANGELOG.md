@@ -1,3 +1,10 @@
+## [0.1.1] - 2025-06-29
+
+### Mejorado
+- Extracción de código repetitivo en las funciones `BOT_GANAR` y `BOT_BLOQUEAR`
+- Mejora de presentación
+- Solo usa caracteres ASCII compatibles con PSeInt
+
 ## [0.1.0] - 2025-06-29
 
 ### Mejorado

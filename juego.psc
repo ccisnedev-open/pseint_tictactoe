@@ -1,5 +1,5 @@
 //##############################################################
-//  TRES EN RAYA – v0.1.0                                     //
+//  TRES EN RAYA – v0.1.1                                     //
 //  Autor: @ccisnedev                                         //
 //##############################################################
 
@@ -99,7 +99,7 @@ Proceso TresEnRaya
         SiNo
             tipoTurno <- "bot"
         FinSi
-        Escribir "¡Ganó ", tipoTurno, " con X!"
+        Escribir "¡Ganó ", tipoTurno, " con ", "X", "!"
     SiNo
         Si ganador = "O" Entonces
             Si turno = 1 Entonces
@@ -107,17 +107,13 @@ Proceso TresEnRaya
             SiNo
                 tipoTurno <- "bot"
             FinSi
-            Escribir "¡Ganó ", tipoTurno, " con O!"
-        SiNo
+            Escribir "¡Ganó ", tipoTurno, " con ", "O", "!"
+                    SiNo
             Escribir "Empate. ¡Bien jugado!"
         FinSi
     FinSi
-
-    // Creditos
-    Escribir "@ccisnedev"
                             
 FinProceso
-
 
 //##############################################################
 //  FUNCIONES
@@ -132,13 +128,20 @@ Funcion nivel <- PRESENTACION
     Definir opcionValida Como Logico
     Repetir
         LIMPIAR_PANTALLA
-        Escribir "╔══════════════════════╗"
-        Escribir "║ Tres en Raya v0.1.0  ║"
-        Escribir "╠══════════════════════╣"
-        Escribir "║ 1.Fácil   2.Difícil  ║"
-        Escribir "╚══════════════════════╝"
+        Escribir " +---------  ¡Bienvenido!  ------------+"
+        Escribir " |                                     |"
+        Escribir " |        @ccisnedev presenta:         |"
+        Escribir " |                                     |"
+        Escribir " |      T R E S   E N   R A Y A        |"
+        Escribir " |              v0.1.1                 |"
+        Escribir " |-------------------------------------|"
+        Escribir " |   Selecciona nivel de dificultad    |"
+        Escribir " |          [1] Fácil                  |"
+        Escribir " |          [2] Difícil                |"
+        Escribir " +-------------------------------------+"
         Escribir ""
         Escribir "Opción: " Sin Saltar
+        
         Leer opcion
         
         opcionValida <- (opcion = "1" O opcion = "2")
@@ -185,12 +188,12 @@ Funcion IMPRIMIR_TABLERO(tablero)
     Para j <- 1 Hasta 3 Hacer
     Escribir Sin Saltar " ", tablero[i,j], " "
     Si j <> 3 Entonces
-    Escribir Sin Saltar "│"
+    Escribir Sin Saltar "|"
     FinSi
     FinPara
     Escribir "   ", i
     Si i <> 1 Entonces
-    Escribir "     ───┼───┼───"
+    Escribir "     ---+---+---"
     FinSi
     FinPara
     Escribir ""
@@ -264,137 +267,100 @@ Funcion BOT_PRIMERA_ESQUINA(tablero, fila Por Referencia, col Por Referencia)
     Hasta Que tablero[fila,col] = " "
 FinFuncion
 
-Funcion encontrado <- BOT_GANAR(tablero, filasBot, columnasBot, diagBot, fila Por Referencia, col Por Referencia)
+Funcion encontrado <- BUSCAR_LINEA_DE_2(tablero, contadores, esDiagonal, fila Por Referencia, col Por Referencia)
     Definir i, filaAux, colAux Como Entero
     encontrado <- Falso
-    
-    // Filas
-    i <- 1
-    Mientras i <= 3 Y No encontrado Hacer
-        Si filasBot[i] = 2 Entonces
-            colAux <- 1
-            Mientras colAux <= 3 Y No encontrado Hacer
-                Si tablero[i,colAux] = " " Entonces
-                    fila <- i 
-                    col <- colAux
-                    encontrado <- Verdadero
-                FinSi
-                colAux <- colAux + 1
-            FinMientras
-        FinSi
-        i <- i + 1
-    FinMientras
-    
-    // Columnas
-    Si No encontrado Entonces
+    // Filas o columnas
+    Si No esDiagonal Entonces
         i <- 1
         Mientras i <= 3 Y No encontrado Hacer
-            Si columnasBot[i] = 2 Entonces
-                filaAux <- 1
-                Mientras filaAux <= 3 Y No encontrado Hacer
-                    Si tablero[filaAux,i] = " " Entonces
-                        fila <- filaAux 
-                        col <- i
+            Si contadores[i] = 2 Entonces
+                colAux <- 1
+                Mientras colAux <= 3 Y No encontrado Hacer
+                    Si tablero[i,colAux] = " " Entonces
+                        fila <- i
+                        col <- colAux
                         encontrado <- Verdadero
                     FinSi
-                    filaAux <- filaAux + 1
+                    colAux <- colAux + 1
                 FinMientras
             FinSi
             i <- i + 1
         FinMientras
-    FinSi
-    
-    // Diagonal /
-    Si No encontrado Y diagBot[1] = 2 Entonces
-        i <- 1
-        Mientras i <= 3 Y No encontrado Hacer
-            Si tablero[i,i] = " " Entonces
-                fila <- i 
-                col <- i
-                encontrado <- Verdadero
-            FinSi
-            i <- i + 1
-        FinMientras
-    FinSi
-    
-    // Diagonal \
-    Si No encontrado Y diagBot[2] = 2 Entonces
-        i <- 1
-        Mientras i <= 3 Y No encontrado Hacer
-            Si tablero[i,4-i] = " " Entonces
-                fila <- i 
-                col <- 4 - i
-                encontrado <- Verdadero
-            FinSi
-            i <- i + 1
-        FinMientras
+        // Columnas
+        Si No encontrado Entonces
+            i <- 1
+            Mientras i <= 3 Y No encontrado Hacer
+                Si contadores[i+3] = 2 Entonces
+                    filaAux <- 1
+                    Mientras filaAux <= 3 Y No encontrado Hacer
+                        Si tablero[filaAux,i] = " " Entonces
+                            fila <- filaAux
+                            col <- i
+                            encontrado <- Verdadero
+                        FinSi
+                        filaAux <- filaAux + 1
+                    FinMientras
+                FinSi
+                i <- i + 1
+            FinMientras
+        FinSi
+    SiNo
+        // Diagonal /
+        Si contadores[1] = 2 Entonces
+            i <- 1
+            Mientras i <= 3 Y No encontrado Hacer
+                Si tablero[i,i] = " " Entonces
+                    fila <- i
+                    col <- i
+                    encontrado <- Verdadero
+                FinSi
+                i <- i + 1
+            FinMientras
+        FinSi
+        // Diagonal \
+        Si No encontrado Y contadores[2] = 2 Entonces
+            i <- 1
+            Mientras i <= 3 Y No encontrado Hacer
+                Si tablero[i,4-i] = " " Entonces
+                    fila <- i
+                    col <- 4 - i
+                    encontrado <- Verdadero
+                FinSi
+                i <- i + 1
+            FinMientras
+        FinSi
     FinSi
 FinFuncion
 
-Funcion encontrado <- BOT_BLOQUEAR(tablero, filasHum, columnasHum, diagHum, fila Por Referencia, col Por Referencia)
-    Definir i, filaAux, colAux Como Entero
-    encontrado <- Falso
-    
-    // Filas
-    i <- 1
-    Mientras i <= 3 Y No encontrado Hacer
-        Si filasHum[i] = 2 Entonces
-            colAux <- 1
-            Mientras colAux <= 3 Y No encontrado Hacer
-                Si tablero[i,colAux] = " " Entonces
-                    fila <- i 
-                    col <- colAux
-                    encontrado <- Verdadero
-                FinSi
-                colAux <- colAux + 1
-            FinMientras
-        FinSi
-        i <- i + 1
-    FinMientras
-    
-    // Columnas
+Funcion encontrado <- BOT_GANAR(tablero, filasBot, columnasBot, diagBot, fila Por Referencia, col Por Referencia)
+    // Usar subproceso genérico para filas y columnas
+    Dimensionar contadores[6]
+    contadores[1] <- filasBot[1]
+    contadores[2] <- filasBot[2]
+    contadores[3] <- filasBot[3]
+    contadores[4] <- columnasBot[1]
+    contadores[5] <- columnasBot[2]
+    contadores[6] <- columnasBot[3]
+    encontrado <- BUSCAR_LINEA_DE_2(tablero, contadores, Falso, fila, col)
     Si No encontrado Entonces
-        i <- 1
-        Mientras i <= 3 Y No encontrado Hacer
-            Si columnasHum[i] = 2 Entonces
-                filaAux <- 1
-                Mientras filaAux <= 3 Y No encontrado Hacer
-                    Si tablero[filaAux,i] = " " Entonces
-                        fila <- filaAux 
-                        col <- i
-                        encontrado <- Verdadero
-                    FinSi
-                    filaAux <- filaAux + 1
-                FinMientras
-            FinSi
-            i <- i + 1
-        FinMientras
+        encontrado <- BUSCAR_LINEA_DE_2(tablero, diagBot, Verdadero, fila, col)
     FinSi
-    
-    // Diagonal /
-    Si No encontrado Y diagHum[1] = 2 Entonces
-        i <- 1
-        Mientras i <= 3 Y No encontrado Hacer
-            Si tablero[i,i] = " " Entonces
-                fila <- i 
-                col <- i
-                encontrado <- Verdadero
-            FinSi
-            i <- i + 1
-        FinMientras
-    FinSi
-    
-    // Diagonal \
-    Si No encontrado Y diagHum[2] = 2 Entonces
-        i <- 1
-        Mientras i <= 3 Y No encontrado Hacer
-            Si tablero[i,4-i] = " " Entonces
-                fila <- i 
-                col <- 4 - i
-                encontrado <- Verdadero
-            FinSi
-            i <- i + 1
-        FinMientras
+FinFuncion
+
+
+Funcion encontrado <- BOT_BLOQUEAR(tablero, filasHum, columnasHum, diagHum, fila Por Referencia, col Por Referencia)
+    // Usar subproceso genérico para filas y columnas
+    Dimensionar contadores[6]
+    contadores[1] <- filasHum[1]
+    contadores[2] <- filasHum[2]
+    contadores[3] <- filasHum[3]
+    contadores[4] <- columnasHum[1]
+    contadores[5] <- columnasHum[2]
+    contadores[6] <- columnasHum[3]
+    encontrado <- BUSCAR_LINEA_DE_2(tablero, contadores, Falso, fila, col)
+    Si No encontrado Entonces
+        encontrado <- BUSCAR_LINEA_DE_2(tablero, diagHum, Verdadero, fila, col)
     FinSi
 FinFuncion
 
@@ -447,10 +413,10 @@ Funcion tactica <- BOT_ESQUINA_TACTICA(tablero,   fila Por Referencia, col Por R
     prCol  <- 0
     Para i <- 1 Hasta 4 Hacer
         Segun i Hacer
-            1: f <- 1; c <- 1
-            2: f <- 1; c <- 3
-            3: f <- 3; c <- 1
-            4: f <- 3; c <- 3
+            1: f <- 1; c <- 1 // a1
+            2: f <- 1; c <- 3 // c1
+            3: f <- 3; c <- 1 // a3
+            4: f <- 3; c <- 3 // c3
         FinSegun
         Si tablero[f,c] = "X" Entonces
             prFila <- f
@@ -462,10 +428,10 @@ Funcion tactica <- BOT_ESQUINA_TACTICA(tablero,   fila Por Referencia, col Por R
     i <- 1
     Mientras i <= 4 Y No tactica Hacer
         Segun i Hacer
-            1: f <- 1; c <- 1
-            2: f <- 1; c <- 3
-            3: f <- 3; c <- 1
-            4: f <- 3; c <- 3
+            1: f <- 1; c <- 1 // a1
+            2: f <- 1; c <- 3 // c1
+            3: f <- 3; c <- 1 // a3
+            4: f <- 3; c <- 3 // c3
         FinSegun
         
         Si tablero[f,c] = " " Entonces
@@ -631,11 +597,11 @@ Funcion DIBUJAR_LINEA_GANADORA(tablero Por Referencia, tipoLinea, indLinea)
     Segun tipoLinea Hacer
         1: // fila
             Para i <- 1 Hasta 3 Hacer 
-                tablero[indLinea,i] <- '─'
+                tablero[indLinea,i] <- '-'
             FinPara
         2: // columna
             Para i <- 1 Hasta 3 Hacer 
-                tablero[i,indLinea] <- '│' 
+                tablero[i,indLinea] <- '|' 
             FinPara
         3: // diagonal /
             Para i <- 1 Hasta 3 Hacer 
