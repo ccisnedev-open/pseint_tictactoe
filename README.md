@@ -28,10 +28,10 @@ Permite jugar contra un **bot con dos niveles de dificultad** e incluye una inte
 ## 🎮 Características del Juego
 
 - ✅ **Reglas completas** del clásico Tres en Raya.
-- 🧠 **Modo un jugador**: compite contra una IA simple.
+- 🧠 **Modo un jugador**: compite contra un algoritmo.
 - 🔁 **Dos niveles de dificultad**:
   - **Fácil**: el bot elige casillas al azar.
-  - **Difícil**: el bot analiza jugadas para **bloquear** y **ganar**.
+  - **Difícil**: el algoritmo analiza jugadas para **bloquear** y **ganar**.
 - 🖥 **Interfaz visual en texto** tipo consola.
 - 🧩 **Arquitectura modular**: subprocesos bien separados para facilitar la lectura, depuración y pruebas.
 - ♻️ **Detección de victoria, empate y reinicio limpio.**
@@ -42,6 +42,11 @@ Este proyecto fue diseñado con un enfoque **educativo**. Se prioriza la **clari
 
 Además, se practica una convención clara en nombres, espaciado y segmentación del flujo.
 
+
+
+## 📑 Informe técnico y algoritmo
+
+Para conocer el diseño, la lógica del algoritmo y la arquitectura del código, revisa el informe detallado en [`ALGORITHM.md`](./ALGORITHM.md).
 
 ## 📒 Simulación de Pantalla
 
