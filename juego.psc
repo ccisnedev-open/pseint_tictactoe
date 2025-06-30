@@ -1,5 +1,5 @@
 //##############################################################
-//  TRES EN RAYA – v0.1.1                                     //
+//  TRES EN RAYA – v0.1.2                                     //
 //  Autor: @ccisnedev                                         //
 //##############################################################
 
@@ -133,7 +133,7 @@ Funcion nivel <- PRESENTACION
         Escribir " |        @ccisnedev presenta:         |"
         Escribir " |                                     |"
         Escribir " |      T R E S   E N   R A Y A        |"
-        Escribir " |              v0.1.1                 |"
+        Escribir " |              v0.1.2                 |"
         Escribir " |-------------------------------------|"
         Escribir " |   Selecciona nivel de dificultad    |"
         Escribir " |          [1] Fácil                  |"
@@ -468,7 +468,16 @@ Funcion ELEGIR_JUGADA_BOT(tablero, nivel, turnoBotNum, filasHum, columnasHum, di
     Definir encontrado Como Logico
     
     Si nivel = 1 Entonces                              // ——— MODO FÁCIL
-        BOT_ALEATORIO(tablero, fila, col)
+        // 1) Ganar de inmediato
+        encontrado <- BOT_GANAR(tablero, filasBot, columnasBot, diagBot, fila, col)
+        // 2) Bloquear derrota inminente
+        Si No encontrado Entonces
+            encontrado <- BOT_BLOQUEAR(tablero, filasHum, columnasHum, diagHum, fila, col)
+        FinSi
+        // 3) Si no puede ganar ni bloquear, juega aleatorio
+        Si No encontrado Entonces
+            BOT_ALEATORIO(tablero, fila, col)
+        FinSi
     SiNo                                               // ——— MODO DIFÍCIL
         // 1) Ganar de inmediato
         encontrado <- BOT_GANAR(tablero, filasBot, columnasBot, diagBot, fila, col)

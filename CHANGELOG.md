@@ -1,3 +1,8 @@
+## [0.1.2] - 2025-06-29
+
+### Mejorado
+- El bot en nivel fácil ahora primero intenta ganar, luego bloquear, y solo si no puede hacer ninguna de esas dos acciones, realiza una jugada aleatoria.
+
 ## [0.1.1] - 2025-06-29
 
 ### Mejorado

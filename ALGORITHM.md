@@ -1,11 +1,16 @@
 **Algoritmo TRES EN RAYA**
-Autor: @ccisnedev • Versión v 0.1.0
+Autor: @ccisnedev • Versión v 0.1.2
 
 ---
 
 ## Abstract
 
-Este documento describe el diseño y la implementación de un programa en **PSeInt** que juega *Tres en Raya* (Tic‑Tac‑Toe) tanto en modo *fácil* (movimientos aleatorios) como en modo *difícil* (algoritmo heurístico). El algoritmo sigue una jerarquía de decisiones **Ganar → Bloquear → Esquina ganadora → Esquina táctica**, suficiente para garantizar la victoria (o al menos el empate) contra un oponente humano que cometa cualquier error estratégico. El texto explica la arquitectura general, las estructuras de datos y cada módulo de decisión para que cualquier programador principiante pueda comprender, mantener o extender el código.
+Este documento describe el diseño y la implementación de un programa en **PSeInt** que juega *Tres en Raya* (Tic‑Tac‑Toe) tanto en modo *fácil* (Ganar → Bloquear → Aleatorio) como en modo *difícil* (algoritmo heurístico). El algoritmo sigue una jerarquía de decisiones:
+
+- **Nivel fácil:** Ganar → Bloquear → Aleatorio
+- **Nivel difícil:** Ganar → Bloquear → Esquina ganadora → Esquina táctica
+
+Esto es suficiente para garantizar la victoria (o al menos el empate) contra un oponente humano que cometa cualquier error estratégico. El texto explica la arquitectura general, las estructuras de datos y cada módulo de decisión para que cualquier programador principiante pueda comprender, mantener o extender el código.
 
 ---
 
@@ -60,44 +65,30 @@ El bucle es secuencial; cada paso entra en la lógica del algoritmo solo **cuand
 
 ---
 
-## IV. Decision Pipeline (modo Difícil)
+
+## IV. Decision Pipeline por Nivel
+
+### Nivel Fácil
+
+El bot sigue la siguiente prioridad descendente:
+
+1. **Ganar:** Si puede ganar en este turno, lo hace.
+2. **Bloquear:** Si el humano puede ganar en el siguiente turno, lo bloquea.
+3. **Aleatorio:** Si no puede ganar ni bloquear, elige una casilla libre al azar.
+
+Esto hace que el bot fácil sea más desafiante que una simple jugada aleatoria, pero sigue siendo vencible.
+
+### Nivel Difícil
+
 En el **primer turno del bot** coloca `"X"` en una esquina libre aleatoria (`a1, c1, a3, c3`).
 Objetivo: maximizar líneas potenciales y preparar un *fork*.
 
-> **Prioridad descendente:**
->
-> A. **Ganar**
-> B. **Bloquear**
-> C. **Esquina ganadora**
-> D. **Esquina táctica**
+**Prioridad descendente:**
 
-### A. Ganar
-
-```pseudocode
-si existe fila/col/diag con 2 X y 1 vacía
-    jugar en la casilla vacía → victoria inmediata
-```
-
-### B. Bloquear
-
-```pseudocode
-si rival tiene fila/col/diag con 2 O y 1 vacía
-    jugar en la casilla vacía → evita derrota
-```
-
-### C. Esquina ganadora (`BOT_ESQUINA_GANADORA`)
-
-Busca una **esquina libre** que, al jugarse, complete **dos líneas a la vez** (p.e. fila + columna).
-Si la halla, la partida termina de inmediato porque el rival solo podría bloquear una.
-
-### D. Esquina táctica (`BOT_ESQUINA_TACTICA`)
-
-Si las estrategias anteriores no aplican, el bot elige la esquina libre que forme pareja con su primera esquina:
-
-| Relación con la primera esquina | Resultado                                   |
-| ------------------------------- | ------------------------------------------- |
-| Misma fila **o** misma columna  | Crear línea `X · X` vulnerable en jugada 3. |
-| Misma diagonal                  | Permitir *fork* fila/diagonal en jugada 3.  |
+1. **Ganar:** Si existe fila/col/diag con 2 X y 1 vacía, juega en la casilla vacía → victoria inmediata.
+2. **Bloquear:** Si el rival tiene fila/col/diag con 2 O y 1 vacía, juega en la casilla vacía → evita derrota.
+3. **Esquina ganadora:** Busca una **esquina libre** que, al jugarse, complete **dos líneas a la vez** (p.e. fila + columna). Si la halla, la partida termina de inmediato porque el rival solo podría bloquear una.
+4. **Esquina táctica:** Si las estrategias anteriores no aplican, el bot elige la esquina libre que forme pareja con su primera esquina (misma fila, columna o diagonal) para preparar un *fork* en el siguiente turno.
 
 Al siguiente turno, cualquier respuesta humana deja al bot con al menos una victoria forzada.
 
